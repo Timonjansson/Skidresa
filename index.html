@@ -70,7 +70,7 @@ h1{margin:.4vh 0 0;font-weight:900;font-size:min(7.6vh,5vw);line-height:1;letter
 .p1 .medal{background:radial-gradient(circle at 35% 30%,#FFF1B0,var(--gold) 60%,#B88A12);box-shadow:0 0 3vh rgba(245,200,66,.6);width:9vh;height:9vh;font-size:4.4vh}
 .p2 .medal{background:radial-gradient(circle at 35% 30%,#FFFFFF,var(--silver) 60%,#8D99A8);box-shadow:0 0 2.4vh rgba(201,211,222,.45)}
 .p3 .medal{background:radial-gradient(circle at 35% 30%,#FFD2AE,var(--bronze) 60%,#94552A);box-shadow:0 0 2.4vh rgba(214,138,78,.45)}
-.card .nm{margin-top:2vh;font-weight:800;font-size:min(2.6vh,1.2vw);line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.card .nm{margin-top:2vh;font-weight:800;font-size:min(2.6vh,1.2vw);line-height:1.15;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .p1 .nm{font-size:min(3.2vh,1.55vw)}
 .card .pt{margin-top:auto;padding-top:1.4vh;font-weight:900;font-size:min(3.4vh,1.55vw);color:var(--ice);font-variant-numeric:tabular-nums}
 .p1 .pt{font-size:min(4vh,1.8vw)}
@@ -87,7 +87,8 @@ h1{margin:.4vh 0 0;font-weight:900;font-size:min(7.6vh,5vw);line-height:1;letter
 .rk{font-weight:800;color:#C9DDF2;font-variant-numeric:tabular-nums}
 .nmr{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ptr{font-weight:800;color:var(--ice);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-.empty{display:grid;place-items:center;height:100%;color:var(--muted);font-size:2.4vh;text-align:center}
+.empty{display:grid;place-items:center;height:100%;font-size:2.4vh;text-align:center;grid-column:1/-1;grid-row:1/-1}
+.empty-box{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);padding:2vh 3vh;border-radius:1.6vh;font-weight:600}
 .period{position:fixed;z-index:3;top:2.2vh;left:2.4vw;display:flex;align-items:center;gap:1.4vh;padding:1.2vh 2vh 1.2vh 1.4vh;border-radius:1.6vh;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px) saturate(1.2);box-shadow:0 .6vh 2.4vh rgba(0,20,50,.25)}
 .period .cal{width:5.6vh;height:5.6vh;border-radius:1.1vh;overflow:hidden;background:#fff;display:flex;flex-direction:column;flex:0 0 auto;box-shadow:0 .3vh 1vh rgba(0,20,50,.3)}
 .period .cal span{background:linear-gradient(135deg,var(--ice),var(--ice-2));color:#04203F;font-weight:800;font-size:1.25vh;text-align:center;line-height:1.7vh;letter-spacing:.08em;text-transform:uppercase}
@@ -114,7 +115,6 @@ h1{margin:.4vh 0 0;font-weight:900;font-size:min(7.6vh,5vw);line-height:1;letter
     <div class="tabs" id="tabs"></div>
     <div class="segs" id="segs"></div>
     <div class="chips">
-      <div class="chip"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z M17 5h3v2a3 3 0 0 1-3 3 M7 5H4v2a3 3 0 0 0 3 3"/></svg>Totalt: <b id="c-total"></b> poäng</div>
       <div class="chip" id="chip-end"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Slutar: <b id="c-end"></b></div>
       <div class="chip"><b id="c-count"></b> deltagare</div>
       <div class="chip">Sida <b id="c-page"></b> / <span id="c-pages"></span></div>
@@ -137,7 +137,7 @@ h1{margin:.4vh 0 0;font-weight:900;font-size:min(7.6vh,5vw);line-height:1;letter
 <script>
 /* ======= Data (genereras automatiskt) ======= */
 const CONFIG = {"title": "Touchdown Sälen", "endsAt": "", "pageSeconds": 12, "reloadMinutes": 30, "updated": "5 okt 2026"};
-const DEPTS  = [{"id": "tm_b2c", "label": "TM B2C", "rows": [["Nova Mccracken", 6225], ["Samir Fakhreddine", 5225], ["Ellen Norragård", 4700], ["Charlie Turesson", 4370], ["Wilmer Räni", 4100], ["Tristan Mackenzie", 4050], ["Dexter Command", 3875], ["Måns Aurelius", 3725], ["Osama Alweli", 3537.5], ["Alexia Soriano", 3506], ["Filip Tomic", 3376], ["Natalie Hayat", 3120], ["Edison Lilliér", 2906], ["Elvira Timmelstad", 2900], ["Isak Kriström", 2675], ["Robin Edman", 2544], ["Elias Fagerlund", 2450], ["Samira Taha", 2425], ["Walter Eklöf", 2390], ["Carl Sterner", 2300], ["André Walkenström", 2290], ["Andrea Lindefeldt", 2150], ["Simon Berhane", 2150], ["Alva Israelsson", 2090], ["Gustavo Chavez", 2000], ["Samuel Equbazghi", 1950], ["Oscar Skott", 1730], ["Filip Schröder", 1612.5], ["Elsa Mildh", 1570], ["Samuel Suliman", 1566], ["Saga Söderström", 1520], ["Noelia Alarcon", 1500], ["Edvin Husén", 1495], ["Theodor Eckstein", 1494], ["Jacob Brolin", 1450], ["Dylan Pesonen", 1350], ["Ebba Jarvin", 1350], ["Julian Dahlqvist", 1350], ["Ruben Malmborg", 1350], ["Selma Rosjö", 1350], ["Simon Wallin", 1350], ["Viggo Svanberg", 1350], ["Wille Ericsson", 1350], ["Charlie Crowe", 1345], ["Elias Widman", 1345], ["Philip Rydholm", 1205], ["Kaitlyn Reyes", 1150], ["Wilmer Grenås", 1150], ["Iris Valdemarsson", 1135], ["Lucas Nordgren", 1050], ["Nathalie Slivo", 1030], ["Wilhelm Folkesson", 852.5], ["Yonis Arale", 800], ["Bardia Batebi", 750], ["Bore Östman", 750], ["Folke Laulund", 750], ["Linus Andersson", 750], ["Stella Korsgren", 750], ["Theodor Yngström", 750], ["William Wreden", 750], ["Emelie Engström", 737.5], ["Fanny Berglund", 630], ["Jakob Kus", 630], ["Noah Bawil", 630], ["Felix Östholm", 625], ["Samuel Holmgren", 460], ["Josefine Ratcliffe", 436], ["Kid Hiltula", 400], ["Sara Agha", 160], ["Linus Breime", 140]]}, {"id": "tm_b2b_ga", "label": "TM B2B GA", "rows": [["Alexander Öberg", 17994.66], ["Noah Haavisto", 11877.3], ["Viktor Karlsson", 5829.18], ["Hugo Käld", 5704.92], ["Erik Schaffner", 5001.18], ["Lucas Börjesson Alsö", 4750.92], ["Emma Toding", 4273.92], ["Freddie Pedersson", 3984.18], ["Lukas Nordlöw", 3796.92], ["Mathias Arze", 3796.92], ["Gabriel Porseby", 3219.66], ["Olle Letterblad", 3219.66], ["Axel Olsten", 2852.46], ["Malin Friberg", 150]]}, {"id": "tm_b2b_pl", "label": "TM B2B PL", "rows": [["Adam Anberg Hanvik", 3655.9], ["Lily Karim", 3561.7], ["David Tillberg", 2962.86], ["Luka Brdaric", 2641.19], ["Viktor Karlsson", 2340.8], ["Lisa Hägg", 1586.43], ["Oliver Sjöström", 1334.74], ["Elton Adami", 750]]}, {"id": "fm", "label": "FM", "rows": [["Linus Nils Wikner", 6300], ["Lucas Falletta", 5040], ["Torkel Ekberg", 4380], ["Kristian Georgijevski", 4150], ["Valter Catoni", 3855], ["Carl Gergely", 3405], ["Adrian Jashari", 3350], ["Benjamin Akatugba", 3175], ["Carl-André Ahlman", 2950], ["Zion Ekelund", 2755], ["Moshin Miri", 2535], ["Axel Wallinder", 2510], ["Max Kinell", 2350], ["Robel Alemseghed", 1550], ["Sara Akgun", 1550], ["Liam Gustavsson", 1485], ["Jénovic Luyindula", 1430], ["Tuva Hulth", 1430], ["Johan Pavon", 1170], ["Adam Moujab", 1150], ["Maria-Dolores Strindvall", 1150], ["Tuvali Svensson", 1100], ["Xercses Pettersson", 1030], ["Daud Dinay Kerar", 750], ["Dion Mohammad", 750], ["Gabriel Barnjak", 750], ["Melos Buzolli", 750], ["Richie Hunjan", 750], ["Viola Hjortheimer", 750], ["Kevin Olivares", 160], ["Martin Rashou", 140]]}];
+const DEPTS  = [{"id": "tm_b2c", "label": "TM B2C", "rows": [["Nova Mccracken", 6225], ["Samir Fakhreddine", 5225], ["Ellen Norragård", 4700], ["Charlie Turesson", 4370], ["Wilmer Räni", 4100], ["Tristan Mackenzie", 4050], ["Dexter Command", 3875], ["Måns Aurelius", 3725], ["Osama Alweli", 3537.5], ["Alexia Soriano", 3506], ["Filip Tomic", 3376], ["Natalie Hayat", 3120], ["Edison Lilliér", 2906], ["Elvira Timmelstad", 2900], ["Isak Kriström", 2675], ["Robin Edman", 2544], ["Elias Fagerlund", 2450], ["Samira Taha", 2425], ["Walter Eklöf", 2390], ["Carl Sterner", 2300], ["André Walkenström", 2290], ["Andrea Lindefeldt", 2150], ["Simon Berhane", 2150], ["Alva Israelsson", 2090], ["Gustavo Chavez", 2000], ["Samuel Equbazghi", 1950], ["Oscar Skott", 1730], ["Filip Schröder", 1612.5], ["Elsa Mildh", 1570], ["Samuel Suliman", 1566], ["Saga Söderström", 1520], ["Noelia Alarcon", 1500], ["Edvin Husén", 1495], ["Theodor Eckstein", 1494], ["Jacob Brolin", 1450], ["Dylan Pesonen", 1350], ["Ebba Jarvin", 1350], ["Julian Dahlqvist", 1350], ["Ruben Malmborg", 1350], ["Selma Rosjö", 1350], ["Simon Wallin", 1350], ["Viggo Svanberg", 1350], ["Wille Ericsson", 1350], ["Charlie Crowe", 1345], ["Elias Widman", 1345], ["Philip Rydholm", 1205], ["Kaitlyn Reyes", 1150], ["Wilmer Grenås", 1150], ["Iris Valdemarsson", 1135], ["Lucas Nordgren", 1050], ["Nathalie Slivo", 1030], ["Wilhelm Folkesson", 852.5], ["Yonis Arale", 800], ["Bardia Batebi", 750], ["Bore Östman", 750], ["Folke Laulund", 750], ["Linus Andersson", 750], ["Stella Korsgren", 750], ["Theodor Yngström", 750], ["William Wreden", 750], ["Emelie Engström", 737.5], ["Fanny Berglund", 630], ["Jakob Kus", 630], ["Noah Bawil", 630], ["Felix Östholm", 625], ["Samuel Holmgren", 460], ["Josefine Ratcliffe", 436], ["Kid Hiltula", 400], ["Sara Agha", 160], ["Linus Breime", 140]]}, {"id": "tm_b2b_ga", "label": "TM B2B GA", "rows": [["Alexander Öberg", 17994.66], ["Noah Haavisto", 11877.3], ["Viktor Karlsson", 5829.18], ["Hugo Käld", 5704.92], ["Erik Schaffner", 5001.18], ["Lucas Börjesson Alsö", 4750.92], ["Emma Toding", 4273.92], ["Freddie Pedersson", 3984.18], ["Lukas Nordlöw", 3796.92], ["Mathias Arze", 3796.92], ["Gabriel Porseby", 3219.66], ["Olle Letterblad", 3219.66], ["Axel Olsten", 2852.46], ["Malin Friberg", 150]]}, {"id": "tm_b2b_pl", "label": "TM B2B PL", "rows": [["Adam Anberg Hanvik", 3655.9], ["Lily Karim", 3561.7], ["David Tillberg", 2962.86], ["Luka Brdaric", 2641.19], ["Viktor Karlsson", 2340.8], ["Lisa Hägg", 1586.43], ["Oliver Sjöström", 1334.74], ["Elton Adami", 750]]}, {"id": "fm", "label": "FM", "rows": [["Linus Nils Wikner", 6300], ["Lucas Falletta", 5040], ["Torkel Ekberg", 4380], ["Kristian Georgijevski", 4150], ["Valter Catoni", 3855], ["Carl Gergely", 3405], ["Adrian Jashari", 3350], ["Benjamin Akatugba", 3175], ["Carl-André Ahlman", 2950], ["Zion Ekelund", 2755], ["Moshin Miri", 2535], ["Axel Wallinder", 2510], ["Max Kinell", 2350], ["Robel Alemseghed", 1550], ["Sara Akgun", 1550], ["Liam Gustavsson", 1485], ["Jénovic Luyindula", 1430], ["Tuva Hulth", 1430], ["Johan Pavon", 1170], ["Adam Moujab", 1150], ["Maria-Dolores Strindvall", 1150], ["Tuvali Svensson", 1100], ["Xercses Pettersson", 1030], ["Daud Dinay Kerar", 750], ["Dion Mohammad", 750], ["Gabriel Barnjak", 750], ["Melos Buzolli", 750], ["Richie Hunjan", 750], ["Viola Hjortheimer", 750], ["Kevin Olivares", 160], ["Martin Rashou", 140]]}, {"id": "is_growth", "label": "InsideSales/Growth", "rows": [["Laura Weiborn Jara", 4916.74], ["Mustafa Alhussainy", 192.18], ["Ebba-Louise Idermark", 41.3]]}];
 /* ============================================ */
 
 const PAGE_MS = CONFIG.pageSeconds * 1000;
@@ -177,13 +177,15 @@ function renderHeader(){
     $("segs").innerHTML = DEPTS.map(x => `<span class="seg"><i data-id="${x.id}"></i></span>`).join("");
   }
   $("tabs").querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.id === d.id));
-  $("c-total").textContent = fmt(d.total);
   $("c-count").textContent = d.rows.length;
 }
 
 function renderLeft(){
   const d = ACTIVE[di];
-  $("dept").textContent = d.label;
+  const el = $("dept"); el.textContent = d.label; el.style.fontSize = "";
+  // Krymp långa avdelningsnamn så de får plats
+  const maxW = $("left").clientWidth;
+  if (el.scrollWidth > maxW) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * maxW / el.scrollWidth * 0.96) + "px";
   const order = [1, 0, 2]; // 2 – 1 – 3
   $("podium").innerHTML = order.map(i => {
     const r = d.rows[i];
@@ -199,7 +201,7 @@ function renderList(){
   $("c-page").textContent = page + 1; $("c-pages").textContent = pages;
   const box = $("list");
   if (!rest.length){
-    box.innerHTML = `<div class="empty">Alla deltagare syns i topp 3.</div>`;
+    box.innerHTML = `<div class="empty"><span class="empty-box">Alla deltagare i ${esc(d.label)} står på pallen just nu.</span></div>`;
     $("lh-range").textContent = d.label; return;
   }
   const max = d.rows[0].pts || 1;
