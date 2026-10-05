@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Touchdown Sälen – Topplista</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#F4F9FF; --muted:#A9C3DE;
+  --ice:#7FE3FF; --ice-2:#3E9BFF; --glow:rgba(127,227,255,.55);
+  --glass:rgba(10,28,58,.62); --glass-2:rgba(18,44,84,.70); --line:rgba(170,215,255,.18);
+  --gold:#F5C842; --silver:#C9D3DE; --bronze:#D68A4E;
+  --font:"Exo 2","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden;background:#06142A;color:var(--ink);font-family:var(--font)}
+body.idle{cursor:none}
+
+/* ---------- Bakgrund ---------- */
+.bg,.bg-photo,.bg-tint,#snow{position:fixed;inset:0}
+.bg svg{width:100%;height:100%;display:block}
+.bg-photo{background:url("salen.jpg") center/cover no-repeat}
+.bg-tint{background:
+  radial-gradient(120% 70% at 50% 0%, rgba(6,20,42,.35), rgba(6,20,42,.78) 70%),
+  linear-gradient(180deg, rgba(20,60,120,.35), rgba(6,20,42,.85))}
+#snow{pointer-events:none}
+
+/* ---------- Ram ---------- */
+.app{position:relative;z-index:2;height:100vh;display:grid;grid-template-rows:auto 1fr;padding:2vh 3vw 3vh}
+
+header{text-align:center}
+.logo{height:5.2vh;display:flex;justify-content:center;align-items:center;gap:.6vh}
+.logo img{height:100%;width:auto}
+.logo .wordmark{font-weight:700;font-size:4.4vh;letter-spacing:.01em}
+h1{margin:.6vh 0 0;font-weight:900;font-size:min(9.4vh,6.2vw);line-height:1;letter-spacing:.02em;text-transform:uppercase;
+  text-shadow:0 0 3vh rgba(127,227,255,.35),0 .4vh 0 rgba(0,0,0,.25)}
+
+.tabs{display:flex;justify-content:center;gap:1vh;margin-top:2.2vh}
+.tab{font-weight:800;font-size:2.3vh;padding:1.1vh 2.4vh;border-radius:999px;background:var(--glass-2);color:var(--muted);border:1px solid var(--line);white-space:nowrap;transition:background .4s,color .4s,box-shadow .4s}
+.tab.active{background:linear-gradient(135deg,var(--ice),var(--ice-2));color:#04203F;border-color:transparent;box-shadow:0 0 2.4vh var(--glow)}
+.segs{display:flex;justify-content:center;gap:1vh;margin-top:1.2vh}
+.seg{width:9vh;height:.55vh;border-radius:9px;background:rgba(170,215,255,.22);overflow:hidden}
+.seg i{display:block;height:100%;width:0;background:var(--ice);box-shadow:0 0 1vh var(--glow)}
+
+.chips{display:flex;justify-content:center;gap:1.4vh;margin-top:2vh;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:1vh;font-weight:600;font-size:2.15vh;padding:1vh 2.2vh;border-radius:1.4vh;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);white-space:nowrap}
+.chip b{color:var(--ice);font-weight:800}
+.chip svg{width:2.4vh;height:2.4vh;stroke:var(--ice);fill:none;stroke-width:2}
+
+/* ---------- Innehåll ---------- */
+.stage{display:grid;grid-template-columns:minmax(0,37%) minmax(0,1fr);gap:2.2vw;margin-top:2.6vh;min-height:0}
+.fade{transition:opacity .5s ease}
+.fade.out{opacity:0}
+
+.left{display:flex;flex-direction:column;min-height:0}
+.dept{margin:0;text-align:center;font-weight:900;font-size:min(9vh,5.4vw);line-height:1;letter-spacing:.02em;color:var(--ice);
+  text-shadow:0 0 2.2vh var(--glow),0 0 6vh rgba(62,155,255,.45);white-space:nowrap}
+.top3{display:flex;align-items:center;justify-content:center;gap:1vh;margin:2vh 0 1.4vh;font-weight:800;font-size:2.8vh;letter-spacing:.06em;text-transform:uppercase}
+.podium{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr);gap:1vw;align-items:end;min-height:0}
+.card{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:2vh;backdrop-filter:blur(10px);
+  padding:2.6vh .6vw 2.4vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:0}
+.card.p1{height:100%;background:linear-gradient(180deg,rgba(30,70,130,.78),rgba(10,28,58,.72));box-shadow:0 0 4vh rgba(127,227,255,.18)}
+.card.p2{height:86%} .card.p3{height:78%}
+.medal{width:7.6vh;height:7.6vh;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:3.6vh;color:#0B1E36;flex:0 0 auto}
+.p1 .medal{background:radial-gradient(circle at 35% 30%,#FFF1B0,var(--gold) 60%,#B88A12);box-shadow:0 0 3vh rgba(245,200,66,.6);width:9vh;height:9vh;font-size:4.4vh}
+.p2 .medal{background:radial-gradient(circle at 35% 30%,#FFFFFF,var(--silver) 60%,#8D99A8);box-shadow:0 0 2.4vh rgba(201,211,222,.45)}
+.p3 .medal{background:radial-gradient(circle at 35% 30%,#FFD2AE,var(--bronze) 60%,#94552A);box-shadow:0 0 2.4vh rgba(214,138,78,.45)}
+.card .nm{margin-top:2vh;font-weight:800;font-size:min(2.8vh,1.35vw);line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.p1 .nm{font-size:min(3.2vh,1.55vw)}
+.card .pt{margin-top:auto;padding-top:1.4vh;font-weight:900;font-size:min(3.4vh,1.55vw);color:var(--ice);font-variant-numeric:tabular-nums}
+.p1 .pt{font-size:min(4vh,1.8vw)}
+.card .pt small{display:block;font-size:1.7vh;font-weight:600;color:var(--muted);letter-spacing:.04em}
+
+.right{background:var(--glass);border:1px solid var(--line);border-radius:2.2vh;backdrop-filter:blur(10px);padding:1.8vh 1.4vw;min-height:0;display:flex;flex-direction:column}
+.list-head{display:flex;justify-content:space-between;align-items:baseline;color:var(--muted);font-weight:600;font-size:1.9vh;padding:0 .6vw 1.2vh;border-bottom:1px solid var(--line);margin-bottom:1.2vh}
+.list-head b{color:var(--ink)}
+#list{flex:1;min-height:0;display:grid;grid-auto-flow:column;column-gap:1.4vw;align-content:start}
+.row{display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;align-items:center;gap:.8vw;padding:0 .9vw;border-radius:1.2vh;position:relative;overflow:hidden;background:rgba(170,215,255,.06)}
+.row .bar{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(62,155,255,.28),rgba(127,227,255,.10));z-index:0}
+.row>span{position:relative;z-index:1}
+.rk{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.nmr{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptr{font-weight:800;color:var(--ice);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.empty{display:grid;place-items:center;height:100%;color:var(--muted);font-size:2.4vh;text-align:center}
+@media (prefers-reduced-motion:reduce){.fade,.tab{transition:none}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#040D20"/><stop offset=".55" stop-color="#14386A"/><stop offset="1" stop-color="#3C6FA8"/></linearGradient>
+      <radialGradient id="aur" cx=".5" cy=".2" r=".6"><stop offset="0" stop-color="#3DFFC8" stop-opacity=".35"/><stop offset=".5" stop-color="#3E9BFF" stop-opacity=".15"/><stop offset="1" stop-color="#3E9BFF" stop-opacity="0"/></radialGradient>
+      <linearGradient id="snowg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6F2FF"/><stop offset="1" stop-color="#9EBFE0"/></linearGradient>
+    </defs>
+    <rect width="1920" height="1080" fill="url(#sky)"/>
+    <ellipse cx="900" cy="260" rx="1100" ry="320" fill="url(#aur)"/>
+    <path fill="#27508A" d="M0 700 L220 560 L380 630 L560 470 L720 590 L900 400 L1080 560 L1240 470 L1420 600 L1600 480 L1780 580 L1920 520 L1920 1080 L0 1080Z"/>
+    <path fill="#5C88BC" d="M0 800 L260 660 L420 720 L640 600 L840 700 L1040 560 L1260 690 L1480 610 L1700 720 L1920 650 L1920 1080 L0 1080Z"/>
+    <path fill="url(#snowg)" d="M0 900 C320 840 640 880 960 850 C1300 820 1600 880 1920 840 L1920 1080 L0 1080Z"/>
+    <g fill="#0B2547">
+      <path d="M80 930 l40 -120 l40 120z M150 945 l30 -90 l30 90z M1740 920 l44 -130 l44 130z M1830 940 l30 -95 l30 95z M1650 950 l26 -80 l26 80z"/>
+    </g>
+  </svg>
+</div>
+<div class="bg-photo" aria-hidden="true"></div>
+<div class="bg-tint" aria-hidden="true"></div>
+<canvas id="snow" aria-hidden="true"></canvas>
+
+<div class="app">
+  <header>
+    <div class="logo"><img src="logo.png" alt="Innovative" onerror="this.remove();document.getElementById('wm').hidden=false"><span class="wordmark" id="wm" hidden>Innovative</span></div>
+    <h1 id="title"></h1>
+    <div class="tabs" id="tabs"></div>
+    <div class="segs" id="segs"></div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z M17 5h3v2a3 3 0 0 1-3 3 M7 5H4v2a3 3 0 0 0 3 3"/></svg>Totalt: <b id="c-total"></b> poäng</div>
+      <div class="chip" id="chip-end"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Slutar: <b id="c-end"></b></div>
+      <div class="chip"><b id="c-count"></b> deltagare</div>
+      <div class="chip">Sida <b id="c-page"></b> / <span id="c-pages"></span></div>
+    </div>
+  </header>
+
+  <section class="stage">
+    <div class="left fade" id="left">
+      <h2 class="dept" id="dept"></h2>
+      <div class="top3"><span aria-hidden="true">🏅</span> Topp 3</div>
+      <div class="podium" id="podium"></div>
+    </div>
+    <div class="right">
+      <div class="list-head"><span id="lh-range"></span><span>Uppdaterad <b id="updated"></b></span></div>
+      <div id="list" class="fade"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ======= Data (genereras automatiskt) ======= */
+const CONFIG = {"title": "Touchdown Sälen", "endsAt": "", "pageSeconds": 12, "reloadMinutes": 30, "updated": "5 okt 2026"};
+const DEPTS  = [{"id": "tm_b2c", "label": "TM B2C", "rows": [["Youcef Smahi", 126000], ["Tristan Mackenzie", 118800], ["Edison Lilliér", 110100], ["Natalie Hayat", 110032], ["Felix Östholm", 109350], ["Julia Lerviken", 109050], ["Wilmer Räni", 108838], ["Lucas Nordgren", 106032], ["Noelia Alarcon", 92375], ["Charlie Turesson", 92228], ["Lova Örtenberg", 79467], ["Lisa Hägg", 75427], ["Darin Jamil", 74650], ["Efe Gencer", 72745], ["Alva Medman", 72405], ["Filip Schröder", 72115], ["Hannes Hellström", 66770], ["Lucas Nyman", 66050], ["Alexia Soriano", 63512], ["Kareem Melek", 52700], ["Mili Olofsson", 52100], ["Samuel Equbazghi", 50120], ["Daniel Fatollahy", 50050], ["Patrick Engholm", 49781], ["Samir Fakhreddine", 44570], ["Yonis Arale", 43650], ["Luka Brdaric", 42800], ["Mercedes Kotschack", 42779], ["Vera Jalava Löfstedt", 42200], ["Alexander Kellman", 41943], ["Karl-william Hallström", 40050], ["Leon Dorgert", 40046], ["Isak Kriström", 38996], ["Arvid Magnusson", 35819], ["Awan Pishtewan", 35811], ["Oscar Andersson", 35734], ["Max Bergendahl", 33560], ["Ludvig Sjöberg", 33543], ["Emelie Engström", 32361], ["Wilhelm Folkesson", 32250], ["Samuel Ankarberg", 31650], ["Måns Granlöf", 30746], ["Oliver Plahn", 29950], ["Vilmer Carling", 29396], ["Selena Lara", 27492], ["Melvin Klejus", 27439], ["Lara Homer", 27035], ["Antonio Estay", 26905], ["Filip Tomic", 26418], ["Christian Choulepnikov", 25850], ["Milos Zivojinovic", 25850], ["Olivia Serner", 23395], ["Dylan Jonsson", 22450], ["Filip Ingberg", 21400], ["Lily Karim", 20650], ["Arvid Zambrano Lindström", 20150], ["Linn Hellekant", 19950], ["Elvis Ekros", 19771], ["Oliver Wallin", 19403], ["Lucas Jihde", 19394], ["Oliver Lewandowski", 19212], ["Sepehr Heidari", 18593], ["Nicolas Arctaedius", 18450], ["Paolo Björkqvist", 18300], ["Sebastian Severinus", 17838], ["Lucas Vidberg", 16581], ["Aidan Donovan", 16520], ["Morgan Lundin", 16414], ["Olivia Fors", 16200], ["Nellie Grandin", 15606], ["Lucas Börjesson Alsö", 15500], ["Alexander Matloob", 15138], ["Edvin Ringblom", 14878], ["William Wreden", 14150], ["Khalil Jamokiki", 12888], ["Pavel Lindegren", 12350], ["Robin Edman", 12248], ["Felicia Ferrigan", 11850], ["Axel Laganis", 11412], ["Maria Andrén", 11400], ["Lukas Rösmark", 10940], ["Sef Jarrar", 10918], ["Lucas Petersens", 10900], ["Theodor Eckstein", 10610], ["Hanasa Faraj", 10550], ["Elis Liljeström", 10000], ["Maria Sheikh", 9913], ["Liam Jurefors", 9600], ["Max Höglund", 9500], ["Nathalie Mårtensson Karlsson", 9324], ["Hugo Viberg", 7400], ["Noah Lundström", 7250], ["David Parsa", 7038], ["Elis Wahlström", 6740], ["Adrian Pellvik", 6612], ["Gwendolyn Janzen", 6565], ["Rebecca Svedmarker", 6500], ["Billy Frisk", 6087], ["Carl Jonason", 5557], ["Faysel Alali", 5478], ["Osama Alweli", 5350], ["Nathan Hallam", 5270], ["Viktor Karlsson", 4800], ["Fred Salomonsson", 4660], ["Robin Claesson", 4576], ["Fabian Dannemann", 4230], ["Nathalie Hanna", 3861], ["Benjamin Özseven", 3758], ["Elias Westersund", 3700], ["Marcus De Flon", 3647], ["Victor Hedrén", 3600], ["Julia Koltun", 3000], ["Samuel Suliman", 2989], ["Dunya Jafari", 2950], ["Viktor Liljedal", 2936], ["Max Beck", 2750], ["Wille Ericsson", 2750], ["Marielle Valtonen", 2700], ["Mohammed Maache", 2700], ["Niccolo Stocker", 2650], ["Oskar Grevelius", 2623], ["Mauritz Cato", 2440], ["Madeleine Franzen", 2435], ["Julian Singh", 2254], ["Leo Fernandes", 2100], ["Lukas Dagermark", 1950], ["Malik Sari", 1950], ["Gustav Syding", 1930], ["Joshua Jansson", 1900], ["Lennox Beyeen", 1900], ["Ängla Nyman", 1800], ["Robin Linderson", 1740], ["Izabelle Boijort", 1600], ["Andreas Almassidis", 1510], ["Manfred Bourker", 1350], ["Jasan Rafik", 1300], ["Kristaps Mikelsons", 1300], ["Engla Olsson", 1272], ["Jayson Soares", 1000], ["Sixten Winthergard", 942], ["John Younes", 550], ["Freja Fichtelius", 450], ["Alexander Havden", 350], ["Astrid Hansson", 350], ["Fabian Warne", 350], ["Gustav Alm", 300], ["Casper Lundmark", 182], ["Sebastian Nyberg", -650], ["Amanda Persson", -700]]}, {"id": "tm_b2b_ga", "label": "TM B2B GA", "rows": [["Gabriel Porseby", 392371], ["Viktor Karlsson", 319070], ["Axel Olsten", 312999], ["Alexander Öberg", 263564], ["Hugo Käld", 218249], ["Gabriel Wikdahl", 199516], ["David Tillberg", 169457], ["Noah Haavisto", 166185], ["Tilde Bergholm", 158125], ["Liam Blylod", 117490], ["Ellinor Ljungblad", 116074], ["Lily Karim", 115063], ["Ivaylo Stinå", 83948], ["Amanda Balzereit", 83584], ["Malin Friberg", 71197], ["Andreas Petersson", 65520], ["Elea Zouagui", 57539], ["Yonas Bakkali", 53021], ["Johan Saxon", 39939], ["Melvin Ohlin", 33876], ["Micaela Sehlstedt", 32379], ["Nikiforos Xanthopoulos", 28529], ["Amanda Peyron", 27315], ["Luka Brdaric", 21434], ["Hampus Bjuvgård", 19315], ["Hugo Anrep Liljegren", 18040], ["Elvis Beale", 17563], ["Hampus Bergstedt", 15357], ["Ares Miwend", 15188], ["Mathias Arze", 12831], ["Mustafa Alhussainy", 10828], ["Freddie Pedersson", 9639], ["Sixten Winthergard", 9275], ["Andreas Johansson", 7289], ["Leo Bergroth", 6172], ["Edward Sundberg", 4751], ["Farid Aramideh", 4751], ["Arlind Lushaj", 4047], ["Christian Choulepnikov", 4002], ["Hermela Abraham", 2375], ["Max Petersson Sahlstedt", 2375], ["Max Wate", 1898], ["Edward Kjelleryd", 683]]}, {"id": "tm_b2b_pl", "label": "TM B2B PL", "rows": [["Oliver Sjöström", 229712], ["Adam Anberg Hanvik", 147904], ["Edward Kjelleryd", 131682], ["Adam Holmvik", 95918], ["Louise Jemsten", 71495], ["Ella Mähl", 65179], ["Lily Karim", 57921], ["Freddie Pedersson", 40586], ["Luka Brdaric", 18976], ["Olivia Serner", 18245], ["Kareem Melek", 13544], ["Max Bergendahl", 11531], ["Max Beck", 10370], ["David Tillberg", 9175], ["Johan Saxon", 4741], ["Måns Granlöf", 2185], ["Elton Adami", 1236], ["Samuel Ankarberg", 720], ["Victor Hedrén", 480], ["Noah Haavisto", 339]]}, {"id": "fm", "label": "FM", "rows": [["Tuvali Svensson", 149460], ["Torkel Ekberg", 124795], ["Lucas Falletta", 120075], ["Richie Hunjan", 114600], ["Benjamin Akatugba", 113520], ["Moshin Miri", 107050], ["Love Sanner", 103050], ["Martin Rashou", 102700], ["Dion Mohammad", 92325], ["Maria-Dolores Strindvall", 89812], ["Philip von der Lancken", 89500], ["Elliot Deras", 84100], ["Conny Bjälkensäter", 71500], ["Akilles Granudd", 65760], ["Vanessa Hultberg", 51475], ["Joshua Johansson", 49130], ["Eliot Dusi", 46860], ["Daniel Larsson", 44400], ["Jonathan Johansson", 42569], ["Moa Segerros", 33905], ["Nikiforos Xanthopoulos", 33670], ["Adrian Jashari", 27250], ["Sedar Qader", 26700], ["Maikel Chabo", 24177], ["Mahmood Abolel", 22497], ["Ahmed Al Salhy", 20990], ["Naser Noory", 20300], ["Tibelya Issa", 19750], ["William Klarström", 18700], ["Wilja Järtby", 17970], ["Hugo Edström", 14430], ["Joel Albinsson", 14110], ["Jetsada Panyaros", 13255], ["Alexander Asfar", 13160], ["William Pan", 12180], ["Johan Pavon", 11663], ["Sabir Rahman", 10950], ["Patrik Gard", 10670], ["Yousif Altameemi", 10400], ["Leo Haugaard", 10372], ["Emin Kavak", 10220], ["Motaz Edris", 7340], ["Daniel Tomov", 7306], ["Khalid Hassan", 5780], ["Kusai Alkharaz", 5770], ["Reza Shakouri", 5157], ["Achille Lööf", 4480], ["Abdirahman Omar", 4450], ["Ridwan Mahamud", 4366], ["Kevin Olivares", 4010], ["Sulaiman Hassan", 3730], ["Alicia Johansen", 3670], ["Emma Matic", 3235], ["Omar Rarrach", 3220], ["Måns Wendel Millerlei", 3075], ["Orestis Kalotas", 2870], ["Alan Bretan", 2820], ["Kevin Zachariasson", 2790], ["Haley Pettersson", 2150], ["Victor Wallsten", 1950], ["Leon Tornhag", 1740], ["John Younes", 1600], ["William Jagersten", 1590], ["Shanga Rekawt", 1550], ["Mohamad Al-aani", 1520], ["Andreas Lirakis", 1500], ["Mostafa Niima", 1440], ["Viresh Patel", 750], ["Sepehr Heidari", 620], ["Kenji Teranishi", 460], ["Majed Alsafadi", 423], ["Felicia Ferrigan", 400], ["Marielle Valtonen", 350], ["Erik Mossberg", 160], ["Rong Pan", 160], ["Atrin Farahani", 80]]}];
+/* ============================================ */
+
+const PAGE_MS = CONFIG.pageSeconds * 1000;
+const $ = id => document.getElementById(id);
+const fmt = n => Math.round(n).toLocaleString("sv-SE");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const loadedAt = Date.now();
+
+// Placering med delade platser vid lika poäng
+DEPTS.forEach(d => {
+  let rank = 0, prev = null;
+  d.rows = d.rows.map((r, i) => { if (r[1] !== prev) { rank = i + 1; prev = r[1]; } return { name: r[0], pts: r[1], rank }; });
+  d.total = d.rows.reduce((s, r) => s + r.pts, 0);
+});
+const ACTIVE = DEPTS.filter(d => d.rows.length);
+let di = 0, page = 0, pageStart = performance.now();
+
+$("title").textContent = CONFIG.title;
+document.title = CONFIG.title + " – Topplista";
+$("updated").textContent = CONFIG.updated;
+if (CONFIG.endsAt) $("c-end").textContent = CONFIG.endsAt; else $("chip-end").hidden = true;
+
+function layout(){
+  const box = $("list");
+  const h = box.clientHeight, gap = innerHeight * 0.008;
+  const per = Math.max(3, Math.floor((h + gap) / (innerHeight * 0.054 + gap)));
+  return { per, cols: 2, size: per * 2, rowh: (h + gap) / per - gap, gap };
+}
+const restOf = d => d.rows.slice(3);
+const pagesOf = d => Math.max(1, Math.ceil(restOf(d).length / layout().size));
+
+function renderHeader(){
+  const d = ACTIVE[di];
+  $("tabs").innerHTML = DEPTS.map(x => `<span class="tab${x === d ? " active" : ""}">${esc(x.label)}</span>`).join("");
+  $("segs").innerHTML = DEPTS.map(x => `<span class="seg"><i data-id="${x.id}"></i></span>`).join("");
+  $("c-total").textContent = fmt(d.total);
+  $("c-count").textContent = d.rows.length;
+}
+
+function renderLeft(){
+  const d = ACTIVE[di];
+  $("dept").textContent = d.label;
+  const order = [1, 0, 2]; // 2 – 1 – 3
+  $("podium").innerHTML = order.map(i => {
+    const r = d.rows[i];
+    if (!r) return `<div></div>`;
+    return `<div class="card p${i+1}"><div class="medal">${r.rank}</div><div class="nm">${esc(r.name)}</div><div class="pt">${fmt(r.pts)}<small>poäng</small></div></div>`;
+  }).join("");
+}
+
+function renderList(){
+  const d = ACTIVE[di], L = layout(), rest = restOf(d);
+  const pages = pagesOf(d);
+  if (page >= pages) page = 0;
+  $("c-page").textContent = page + 1; $("c-pages").textContent = pages;
+  const box = $("list");
+  if (!rest.length){
+    box.innerHTML = `<div class="empty">Alla deltagare syns i topp 3.</div>`;
+    $("lh-range").textContent = d.label; return;
+  }
+  const max = d.rows[0].pts || 1;
+  const slice = rest.slice(page * L.size, (page + 1) * L.size);
+  box.style.gridTemplateRows = `repeat(${L.per}, ${L.rowh}px)`;
+  box.style.gridTemplateColumns = "repeat(2, minmax(0,1fr))";
+  box.style.rowGap = L.gap + "px";
+  const fs = Math.min(L.rowh * 0.4, innerWidth * 0.0125);
+  box.innerHTML = slice.map(r => `<div class="row" style="font-size:${fs}px">
+      <span class="bar" style="width:${Math.max(0, r.pts / max * 100)}%"></span>
+      <span class="rk">${r.rank}</span><span class="nmr">${esc(r.name)}</span><span class="ptr">${fmt(r.pts)}</span></div>`).join("");
+  const from = slice[0].rank, to = slice[slice.length - 1].rank;
+  $("lh-range").innerHTML = `<b>${esc(d.label)}</b>: plats ${from}–${to} av ${d.rows.length}`;
+}
+
+function renderAll(){ renderHeader(); renderLeft(); renderList(); }
+
+function tickProgress(now){
+  const d = ACTIVE[di];
+  const frac = Math.min(1, (now - pageStart) / PAGE_MS);
+  const pages = pagesOf(d);
+  document.querySelectorAll(".seg i").forEach(el => {
+    const idx = ACTIVE.findIndex(x => x.id === el.dataset.id);
+    el.style.width = idx < 0 ? "0" : idx < di ? "100%" : idx > di ? "0" : ((page + frac) / pages * 100) + "%";
+  });
+}
+
+function next(){
+  const d = ACTIVE[di];
+  const changeDept = page + 1 >= pagesOf(d);
+  // Ladda om sidan efter ett helt varv så TV:n hämtar nya siffror
+  if (changeDept && di === ACTIVE.length - 1 && Date.now() - loadedAt > CONFIG.reloadMinutes * 60000){ location.reload(); return; }
+  const targets = changeDept ? [$("left"), $("list")] : [$("list")];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  targets.forEach(t => t.classList.add("out"));
+  setTimeout(() => {
+    if (changeDept){ di = (di + 1) % ACTIVE.length; page = 0; } else page++;
+    renderAll();
+    targets.forEach(t => t.classList.remove("out"));
+    pageStart = performance.now();
+  }, reduce ? 0 : 500);
+}
+
+function loop(now){
+  if (ACTIVE.length){
+    tickProgress(now);
+    if (now - pageStart >= PAGE_MS){ pageStart = Infinity; next(); }
+  }
+  requestAnimationFrame(loop);
+}
+
+if (!ACTIVE.length){
+  document.querySelector(".stage").innerHTML = `<div class="empty" style="grid-column:1/-1">Topplistan visas här så fort resultaten laddats upp.</div>`;
+} else {
+  renderAll();
+  let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(renderList, 200); });
+  requestAnimationFrame(loop);
+}
+
+// Göm muspekaren
+let idle; addEventListener("mousemove", () => { document.body.classList.remove("idle"); clearTimeout(idle); idle = setTimeout(() => document.body.classList.add("idle"), 3000); });
+
+// Snöfall
+(function(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = $("snow"), ctx = c.getContext("2d"); let w, h, f = [];
+  function size(){ const dpr = devicePixelRatio || 1; w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr;
+    f = Array.from({ length: Math.round(innerWidth / 16) }, () => ({ x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 1.8 + .5) * dpr, s: (Math.random() * .5 + .25) * dpr, d: Math.random() * 6 })); }
+  size(); addEventListener("resize", size);
+  (function t(){ ctx.clearRect(0, 0, w, h); ctx.fillStyle = "rgba(255,255,255,.75)";
+    for (const p of f){ p.y += p.s; p.d += .01; p.x += Math.sin(p.d) * .3; if (p.y > h){ p.y = -4; p.x = Math.random() * w; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
+    requestAnimationFrame(t); })();
+})();
+</script>
+</body>
+</html>
