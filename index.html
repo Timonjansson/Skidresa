@@ -37,7 +37,7 @@ header{text-align:center}
 h1{margin:.4vh 0 0;font-weight:900;font-size:min(7.6vh,5vw);line-height:1;letter-spacing:.02em;text-transform:uppercase;
   text-shadow:0 .3vh 2.4vh rgba(0,20,50,.55)}
 
-.tabs{display:flex;justify-content:center;gap:1vh;margin-top:2.2vh}
+.tabs{position:relative;z-index:5;display:flex;justify-content:center;gap:1vh;margin-top:2.2vh}
 .tab{cursor:pointer;font-family:inherit;backdrop-filter:blur(10px);font-weight:800;font-size:2.3vh;padding:1.1vh 2.4vh;border-radius:999px;background:var(--glass-2);color:var(--muted);border:1px solid var(--line);white-space:nowrap;transition:background .4s,color .4s,box-shadow .4s}
 .tab:hover{color:var(--ink)}
 .tab.off{opacity:.45;cursor:default}
@@ -171,8 +171,12 @@ const pagesOf = d => Math.max(1, Math.ceil(restOf(d).length / layout().size));
 
 function renderHeader(){
   const d = ACTIVE[di];
-  $("tabs").innerHTML = DEPTS.map(x => `<button type="button" class="tab${x === d ? " active" : ""}${x.rows.length ? "" : " off"}" data-id="${x.id}">${esc(x.label)}</button>`).join("");
-  $("segs").innerHTML = DEPTS.map(x => `<span class="seg"><i data-id="${x.id}"></i></span>`).join("");
+  // Knapparna skapas en gång och behålls, så att ett klick aldrig tappas när sidan byter
+  if (!$("tabs").children.length){
+    $("tabs").innerHTML = DEPTS.map(x => `<button type="button" class="tab${x.rows.length ? "" : " off"}" data-id="${x.id}">${esc(x.label)}</button>`).join("");
+    $("segs").innerHTML = DEPTS.map(x => `<span class="seg"><i data-id="${x.id}"></i></span>`).join("");
+  }
+  $("tabs").querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.id === d.id));
   $("c-total").textContent = fmt(d.total);
   $("c-count").textContent = d.rows.length;
 }
@@ -246,11 +250,15 @@ function next(){
   if (changeDept) goTo((di + 1) % ACTIVE.length, 0); else goTo(di, page + 1);
 }
 // Klicka på en avdelning för att hoppa dit direkt – sedan rullar den vidare som vanligt
-$("tabs").addEventListener("click", e => {
-  const t = e.target.closest(".tab"); if (!t) return;
+function pickTab(e){
+  const t = e.target.closest && e.target.closest(".tab"); if (!t) return;
+  e.preventDefault();
   const i = ACTIVE.findIndex(x => x.id === t.dataset.id);
   if (i >= 0) goTo(i, 0);
-});
+}
+// pointerdown fungerar för både mus, pekskärm och TV-fjärrkontroller med muspekare
+$("tabs").addEventListener("pointerdown", pickTab);
+$("tabs").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") pickTab(e); });
 
 // Dagens datum i kalenderikonen
 const MON = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
